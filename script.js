@@ -92,7 +92,7 @@ function spanToNumber(id) {
 }
 
 //check out button handler
-const cart = document.getElementById('cart');
+const cart = document.getElementById('cart-section');
 const checkoutMessage = document.getElementById('checkout-message');
 const chekoutBtn = document.getElementById('check-out-btn');
 
