@@ -1,3 +1,7 @@
+document.addEventListener('DOMContentLoaded', function () {
+    grandPriceCalculator();
+})
+
 //phone button handler
 const phoneMinusBtn = document.getElementById('phone-minus-btn');
 const phonePlusBtn = document.getElementById('phone-plus-btn');
@@ -87,15 +91,17 @@ function spanToNumber(id) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    grandPriceCalculator();
-})
-
 //check out button handler
 const cart = document.getElementById('cart');
 const checkoutMessage = document.getElementById('checkout-message');
 const chekoutBtn = document.getElementById('check-out-btn');
+
 chekoutBtn.addEventListener('click', function () {
-    checkoutMessage.style.display = 'block';
-    cart.style.display = 'none';
+    const total = spanToNumber('total');
+    if (total === 0) {
+        alert('Please add any item to cart!')
+    } else {
+        checkoutMessage.style.display = 'block';
+        cart.style.display = 'none';
+    }
 })
