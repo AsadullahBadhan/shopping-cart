@@ -34,7 +34,6 @@ function minusBtnHandler(countId, priceId) {
 
 function priceCalculator(priceId, count) {
     let unitPrice;
-    console.log(priceId);
     if (priceId === 'phone-price') {
         unitPrice = 1219;
     }
@@ -47,11 +46,20 @@ function priceCalculator(priceId, count) {
 }
 
 function grandPriceCalculator() {
-    const phonePrice = document.getElementById('phone-price');
-    const phonePriceNum = parseInt(phonePrice.innerText);
-    const casePrice = document.getElementById('case-price');
-    const casePriceNum = parseInt(casePrice.innerText);
-    let subtotal = phonePriceNum + casePriceNum;
+    let phonePrice = spanToNumber('phone-price');
+    let casePrice = spanToNumber('case-price');
+    let subtotal = phonePrice + casePrice;
+    if (!phonePrice) {
+        phonePrice = 0;
+        subtotal = casePrice;
+    }
+    else if (!casePrice) {
+        casePrice = 0;
+        subtotal = phonePrice;
+    }
+    if (!phonePrice && !casePrice) {
+        subtotal = 0;
+    }
     let tax = subtotal * 0.15;
     let taxRound = Math.round(tax);
     let grandTotal = taxRound + subtotal;
@@ -60,4 +68,34 @@ function grandPriceCalculator() {
     document.getElementById('total').innerText = grandTotal;
 }
 
-grandPriceCalculator();
+//remove item
+const removeBtns = document.getElementsByClassName('remove-item');
+for (let i = 0; i < removeBtns.length; i++) {
+    const removeBtn = removeBtns[i];
+    removeBtn.addEventListener('click', function () {
+        this.parentNode.parentNode.parentNode.remove();
+        grandPriceCalculator();
+    })
+}
+
+//number converter
+function spanToNumber(id) {
+    const price = document.getElementById(id);
+    if (price) {
+        const priceNum = parseInt(price.innerText);
+        return priceNum;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    grandPriceCalculator();
+})
+
+//check out button handler
+const cart = document.getElementById('cart');
+const checkoutMessage = document.getElementById('checkout-message');
+const chekoutBtn = document.getElementById('check-out-btn');
+chekoutBtn.addEventListener('click', function () {
+    checkoutMessage.style.display = 'block';
+    cart.style.display = 'none';
+})

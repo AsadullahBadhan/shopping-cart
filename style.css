@@ -58,3 +58,7 @@ body {
 	background-color: #2fbe70;
 	border: none;
 }
+
+#checkout-message {
+	display: none;
+}
